@@ -1,0 +1,12 @@
+{
+  "name": "metrics",
+  "version": "0.0.0",
+  "description": "metrics visualization with vue3 and nestjs",
+  "repository": "git@github.com:larizzatg/metrics.git",
+  "author": "larizzatg <larizzatg@hotmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ]
+}
