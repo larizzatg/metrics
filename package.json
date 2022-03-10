@@ -9,6 +9,9 @@
   "workspaces": [
     "apps/*"
   ],
+  "scripts": {
+    "dev": "turbo run dev --no-cache --parallel --continue"
+  },
   "devDependencies": {
     "turbo": "^1.1.6"
   }
