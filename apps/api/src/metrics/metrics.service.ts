@@ -14,8 +14,7 @@ export class MetricsService {
     return this.metricsRepository.getAllMetrics()
   }
 
-  createMetric(createMetricDto: CreateMetricDto) {
-    const metric = this.metricsRepository.create(createMetricDto)
-    return this.metricsRepository.save(metric)
+  createMetric(createMetricDto: CreateMetricDto): Promise<Metric> {
+    return this.metricsRepository.createMetric(createMetricDto)
   }
 }

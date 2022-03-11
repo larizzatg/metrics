@@ -13,8 +13,7 @@ export class MetricsController {
   }
 
   @Post()
-  create(@Body() createMetricDto: CreateMetricDto) {
-    this.metricsService.createMetric(createMetricDto)
-    return createMetricDto
+  create(@Body() createMetricDto: CreateMetricDto): Promise<Metric> {
+    return this.metricsService.createMetric(createMetricDto)
   }
 }
