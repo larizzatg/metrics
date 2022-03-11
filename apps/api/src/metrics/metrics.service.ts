@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { CreateMetricDto } from './dto/create-metric.dto'
+import { Metric } from './entities/metric.entity'
 import { MetricsRepository } from './metrics.repository'
 @Injectable()
 export class MetricsService {
@@ -9,8 +10,8 @@ export class MetricsService {
     private metricsRepository: MetricsRepository,
   ) {}
 
-  getAllMetrics() {
-    return this.metricsRepository.find()
+  getAllMetrics(): Promise<Metric[]> {
+    return this.metricsRepository.getAllMetrics()
   }
 
   createMetric(createMetricDto: CreateMetricDto) {
