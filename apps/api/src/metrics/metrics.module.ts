@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { MetricsController } from './metrics.controller'
 import { MetricsService } from './metrics.service'
-import { Metric } from './entities/metric.entity'
+import { MetricsRepository } from './metrics.repository'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Metric])],
+  imports: [TypeOrmModule.forFeature([MetricsRepository])],
   controllers: [MetricsController],
   providers: [MetricsService],
 })

@@ -1,21 +1,20 @@
 import { Injectable } from '@nestjs/common'
-import { CreateMetricDto } from './dto/create-metric.dto'
-import { Metric } from './entities/metric.entity'
-import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
+import { CreateMetricDto } from './dto/create-metric.dto'
+import { MetricsRepository } from './metrics.repository'
 @Injectable()
 export class MetricsService {
   constructor(
-    @InjectRepository(Metric)
-    private readonly metricRepository: Repository<Metric>,
+    @InjectRepository(MetricsRepository)
+    private metricsRepository: MetricsRepository,
   ) {}
 
   getAllMetrics() {
-    return this.metricRepository.find()
+    return this.metricsRepository.find()
   }
 
   createMetric(createMetricDto: CreateMetricDto) {
-    const metric = this.metricRepository.create(createMetricDto)
-    return this.metricRepository.save(metric)
+    const metric = this.metricsRepository.create(createMetricDto)
+    return this.metricsRepository.save(metric)
   }
 }
