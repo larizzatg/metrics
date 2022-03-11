@@ -12,6 +12,11 @@ export class MetricsController {
     return this.metricsService.getAllMetrics()
   }
 
+  @Get('/avg')
+  getAvgByTimestamp(): Promise<Metric[]> {
+    return this.metricsService.getMetricsAvgByTimestamp()
+  }
+
   @Post()
   create(@Body() createMetricDto: CreateMetricDto): Promise<Metric> {
     return this.metricsService.createMetric(createMetricDto)

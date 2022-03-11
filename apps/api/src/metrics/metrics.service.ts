@@ -14,6 +14,10 @@ export class MetricsService {
     return this.metricsRepository.getAllMetrics()
   }
 
+  getMetricsAvgByTimestamp(): Promise<Metric[]> {
+    return this.metricsRepository.getMetricsAvgByTimestamp()
+  }
+
   createMetric(createMetricDto: CreateMetricDto): Promise<Metric> {
     return this.metricsRepository.createMetric(createMetricDto)
   }
