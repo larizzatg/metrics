@@ -1,4 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm'
+import { AvgFilterMetricDto } from './dto/avg-filter-metric.dto'
 import { CreateMetricDto } from './dto/create-metric.dto'
 import { Metric } from './entities/metric.entity'
 
@@ -8,8 +9,10 @@ export class MetricsRepository extends Repository<Metric> {
     return this.find()
   }
 
-  async getMetricsAvgByTimestamp(): Promise<Metric[]> {
-    const interval = 'day'
+  async getMetricsAvgByTimestamp(
+    avgFilterMetricDto: AvgFilterMetricDto,
+  ): Promise<Metric[]> {
+    const { interval } = avgFilterMetricDto
     const averageMetrics = await this.createQueryBuilder()
       .select('metric.name', 'name')
       .addSelect('ROUND(AVG(metric.value))', 'value')
