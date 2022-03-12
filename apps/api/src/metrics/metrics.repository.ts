@@ -12,8 +12,8 @@ export class MetricsRepository extends Repository<Metric> {
   async getMetricsAvgByTimestamp(
     avgFilterMetricDto: AvgFilterMetricDto,
   ): Promise<Metric[]> {
-    const { interval } = avgFilterMetricDto
-    const averageMetrics = await this.createQueryBuilder()
+    const { interval, startDate, endDate } = avgFilterMetricDto
+    const query = this.createQueryBuilder()
       .select('metric.name', 'name')
       .addSelect('ROUND(AVG(metric.value))', 'value')
       .addSelect(`DATE_TRUNC('${interval}', metric.timestamp)`, 'datetime')
@@ -22,7 +22,16 @@ export class MetricsRepository extends Repository<Metric> {
       .addGroupBy('datetime')
       .orderBy('metric.name')
       .addOrderBy('datetime')
-      .getRawMany()
+
+    if (startDate) {
+      query.andWhere('metric.timestamp >= :startDate', { startDate })
+    }
+
+    if (endDate) {
+      query.andWhere('metric.timestamp <= :endDate', { endDate })
+    }
+
+    const averageMetrics = await query.getRawMany()
     return averageMetrics
   }
 
