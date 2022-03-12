@@ -17,5 +17,11 @@ module.exports = {
       files: ['cypress/integration/**.spec.{js,ts,jsx,tsx}'],
       extends: ['plugin:cypress/recommended'],
     },
+    {
+      files: ['tailwind.config.js', 'postcss.config.js'],
+      env: {
+        node: true,
+      },
+    },
   ],
 }
