@@ -5,7 +5,7 @@ import AppHeader from './components/app-header/app-header.vue'
 
 <template>
   <AppHeader title="Metrics" />
-  <RouterView />
+  <RouterView class="mx-auto mt-8 md:mt-14 max-w-screen-2xl" />
 </template>
 
 <style lang="postcss">
