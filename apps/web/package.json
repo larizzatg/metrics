@@ -5,7 +5,8 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview --port 5050",
-    "test:unit": "vitest --environment jsdom",
+    "test:unit": "vitest --environment jsdom --globals",
+    "test:ui": "vitest --ui",
     "test:e2e": "start-server-and-test preview http://127.0.0.1:5050/ 'cypress open'",
     "test:e2e:ci": "start-server-and-test preview http://127.0.0.1:5050/ 'cypress run'",
     "typecheck": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
@@ -14,6 +15,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.5.0",
     "vue": "^3.2.31",
     "vue-router": "^4.0.12"
   },
@@ -25,9 +27,12 @@
     "@storybook/addon-links": "^6.4.19",
     "@storybook/addon-postcss": "^2.0.0",
     "@storybook/vue3": "^6.4.19",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/vue": "^6.4.2",
     "@types/jsdom": "^16.2.14",
     "@types/node": "^16.11.25",
     "@vitejs/plugin-vue": "^2.2.2",
+    "@vitest/ui": "^0.6.0",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^10.0.0",
     "@vue/test-utils": "^2.0.0-rc.18",
