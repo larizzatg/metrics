@@ -18,6 +18,6 @@ const onInput = (payload: Event) => {
     :type="type || 'text'"
     :value="modelValue"
     @input="onInput"
-    class="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 border-2 border-indigo-100 rounded-lg appearance-none focus:outline-none focus:border-indigo-400 bg-gray-50"
+    class="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 border border-indigo-100 rounded-md appearance-none focus:outline-none focus:border-indigo-400 bg-gray-50"
   />
 </template>
