@@ -22,3 +22,14 @@ export const Default = Template.bind({})
 Default.args = {
   text: 'My button',
 }
+
+export const Sizes = () => ({
+  components: { AppButton },
+  template: `
+    <div>
+    <app-button size="small" class="my-2">small button</app-button>
+    <app-button size="medium" class="my-2">medium button</app-button>
+    <app-button size="large" class="my-2">large button</app-button>
+    </div>
+  `,
+})
