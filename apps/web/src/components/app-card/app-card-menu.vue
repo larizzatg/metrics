@@ -2,7 +2,7 @@
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 
 type MenuOption = {
-  id?: string
+  id?: string | number
   name: string
 }
 
@@ -10,7 +10,9 @@ interface MenuProps {
   options: MenuOption[]
 }
 
-withDefaults(defineProps<MenuProps>(), { options: () => [] })
+withDefaults(defineProps<MenuProps>(), {
+  options: () => [],
+})
 const emit = defineEmits(['change'])
 
 const onOptionSelected = (option: MenuOption) => {
@@ -19,8 +21,8 @@ const onOptionSelected = (option: MenuOption) => {
 </script>
 
 <template>
-  <Menu as="div" class="relative inline-block">
-    <MenuButton class="w-4 h-4">
+  <Menu as="div" class="relative flex">
+    <MenuButton class="items-center justify-center w-4 h-4">
       <svg
         width="16"
         height="16"
@@ -37,7 +39,7 @@ const onOptionSelected = (option: MenuOption) => {
       </svg>
     </MenuButton>
     <MenuItems
-      class="absolute left-0 origin-top-right bg-white rounded-md shadow-md min-w-max ring-1 ring-black ring-opacity-5 focus:outline-none"
+      class="absolute right-0 mt-4 origin-top-right bg-white shadow-md min-w-max ring-1 ring-black ring-opacity-5 focus:outline-none"
     >
       <MenuItem
         v-for="option in options"
@@ -48,7 +50,7 @@ const onOptionSelected = (option: MenuOption) => {
         <button
           :class="[
             active ? 'bg-indigo-500 text-white' : 'text-gray-900',
-            'group flex items-center w-full px-4 py-2 text-sm rounded-md ',
+            'group flex items-center w-full px-4 py-2 text-sm',
           ]"
         >
           {{ option.name }}

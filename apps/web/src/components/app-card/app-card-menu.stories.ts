@@ -11,8 +11,7 @@ const Template: Story<typeof AppCardMenu> = (args) => ({
   setup() {
     return { args }
   },
-  template: `<app-card-menu v-bind="args"  />
-    `,
+  template: `<app-card-menu v-bind="args"/>`,
 })
 
 export const Default = Template.bind({})

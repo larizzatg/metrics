@@ -6,9 +6,10 @@ defineProps<{
 
 <template>
   <div class="px-4 py-8 bg-white">
-    <header>
+    <header class="flex items-center justify-center mb-5">
       <slot name="header">
-        <h5 class="mb-5 caption">{{ title }}</h5>
+        <h5 class="flex-1 caption">{{ title }}</h5>
+        <slot name="menu" />
       </slot>
     </header>
     <div>
