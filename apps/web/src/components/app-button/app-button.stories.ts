@@ -33,3 +33,13 @@ export const Sizes = () => ({
     </div>
   `,
 })
+
+export const Types = () => ({
+  components: { AppButton },
+  template: `
+    <div>
+    <app-button type="primary" class="my-2">primary button</app-button>
+    <app-button type="secondary" class="my-2">secondary button</app-button>
+    </div>
+  `,
+})
