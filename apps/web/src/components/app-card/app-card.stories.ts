@@ -1,7 +1,7 @@
 import AppCard from './app-card.vue'
 
 export default {
-  title: 'AppCard',
+  title: 'AppCard/Card',
   component: AppCard,
 }
 
