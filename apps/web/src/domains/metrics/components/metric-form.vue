@@ -1,45 +1,58 @@
 <script setup lang="ts">
-import AppCard from '@/components/app-card/app-card.vue'
+import { reactive, toRaw } from 'vue'
+import { useToast } from 'vue-toastification'
 import AppField from '@/components/app-field/app-field.vue'
 import AppInput from '@/components/app-input/app-input.vue'
 import AppButton from '@/components/app-button/app-button.vue'
-import { reactive } from 'vue'
 
-interface MetricForm {
-  name: string
-  value: number
-}
-type FormErrors<T> = Record<keyof T, string[]>
+import type { FormErrors, MetricFormProps } from '../types'
+import { createMetric } from '../api'
 
-const form = reactive<MetricForm>({
+const emit = defineEmits(['submit'])
+
+const form = reactive<MetricFormProps>({
   name: '',
   value: 0,
 })
-const formErrors = reactive<FormErrors<MetricForm>>({
+const formErrors = reactive<FormErrors<MetricFormProps>>({
   name: [],
   value: [],
 })
-
-const emit = defineEmits(['submit'])
 
 const validateForm = () => {
   let valid = true
   Object.entries(form).forEach(([key, value]) => {
     if (value !== 0 && !value) {
-      formErrors[key as keyof MetricForm].push(
+      formErrors[key as keyof MetricFormProps].push(
         `The ${key} is necessary for the metric form`,
       )
       valid = false
     } else {
-      formErrors[key as keyof MetricForm] = []
+      formErrors[key as keyof MetricFormProps] = []
     }
   })
   return valid
 }
-const onSubmit = () => {
-  if (validateForm()) {
-    emit('submit', form)
+
+const onSubmit = async () => {
+  if (!validateForm()) {
+    return
   }
+
+  const { error, data } = await createMetric(toRaw(form))
+  if (error) {
+    if (!Array.isArray(error.messages)) {
+      for (const property in error.messages ?? {}) {
+        formErrors[property as keyof MetricFormProps] = error.messages[property]
+      }
+    }
+
+    // handle global errors
+    return
+  }
+  const toast = useToast()
+  toast('New metric added')
+  emit('submit', data)
 }
 </script>
 
@@ -54,7 +67,7 @@ const onSubmit = () => {
       class="mt-5"
       :errors="formErrors.value"
     >
-      <app-input type="number" v-model="form.value" />
+      <app-input type="number" v-model.number="form.value" />
     </app-field>
     <app-button class="mt-6">Add Metric</app-button>
   </form>
