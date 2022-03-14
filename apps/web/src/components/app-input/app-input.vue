@@ -2,7 +2,7 @@
 interface InputProps {
   type?: string
   placeholder?: string
-  modelValue?: string
+  modelValue?: string | number
 }
 defineProps<InputProps>()
 const emit = defineEmits(['update:modelValue'])

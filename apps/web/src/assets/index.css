@@ -3,27 +3,29 @@
 @tailwind utilities;
 
 @layer base {
-  h1 {
-    @apply text-5xl tracking-tight text-gray-700 font-light;
-  }
+  @variants responsive {
+    .title-1 {
+      @apply text-5xl tracking-tight text-gray-700 font-light;
+    }
 
-  h2 {
-    @apply text-4xl tracking-normal leading-8 text-gray-700 font-light;
-  }
+    .title-2 {
+      @apply text-4xl tracking-normal leading-8 text-gray-700 font-light;
+    }
 
-  h3 {
-    @apply text-3xl tracking-normal leading-8 text-gray-700 font-light;
-  }
+    .title-3 {
+      @apply text-3xl tracking-normal leading-8 text-gray-700 font-light;
+    }
 
-  h4 {
-    @apply text-base text-gray-700 font-medium;
-  }
+    .title-4 {
+      @apply text-base text-gray-700 font-medium;
+    }
 
-  p {
-    @apply text-base leading-5 text-gray-700 font-normal;
-  }
+    .paragraph {
+      @apply text-base leading-5 text-gray-700 font-normal;
+    }
 
-  .caption {
-    @apply text-sm tracking-widest text-gray-500 uppercase;
+    .caption {
+      @apply text-sm tracking-widest text-gray-500 uppercase;
+    }
   }
 }
