@@ -1,15 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Timeline from '../views/Timeline.vue'
+
+import { MetricsRoutes } from '@/domains/metrics/routes'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'timeline',
-      component: Timeline,
-    },
-  ],
+  routes: [...MetricsRoutes],
 })
 
 export default router
