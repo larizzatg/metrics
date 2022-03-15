@@ -7,33 +7,18 @@ import type { MetricAverage } from '../types'
 const props = defineProps<{ metrics: MetricAverage[] }>()
 
 Chart.register(...registerables)
-const datasets = computed(() => {
-  const groupedMetrics: any = {}
-  props.metrics.forEach((metric) => {
-    if (!groupedMetrics[metric.name]) {
-      groupedMetrics[metric.name] = {
-        label: [metric.name],
-        data: [],
-      }
-    }
-
-    groupedMetrics[metric.name].data.push({
-      value: Number(metric.value),
-      datetime: metric.datetime,
-    })
-  })
-
-  return Object.values(groupedMetrics)
-})
 
 const lineChartProps = {
   chartData: {
-    datasets: datasets.value,
+    datasets: [{ data: props.metrics }],
   },
   options: {
     parsing: {
       xAxisKey: 'datetime',
       yAxisKey: 'value',
+    },
+    plugins: {
+      legend: { display: false },
     },
   },
 }
