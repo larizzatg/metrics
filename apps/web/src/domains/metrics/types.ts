@@ -29,3 +29,19 @@ export enum MetricTimelineInterval {
 }
 
 export type FormErrors<T> = Record<keyof T, string[]>
+
+export interface ApiError {
+  status: number
+  statusText: string
+  messages: string[] | Record<string, string[]>
+}
+
+export interface ApiResult<T> {
+  error: ApiError | null
+  data: T | null
+}
+
+export interface NestValidorErrorMessage {
+  constraints: Record<string, string>
+  property: string
+}

@@ -5,24 +5,11 @@ import type {
   Metric,
   MetricAverage,
   MetricFormProps,
+  ApiResult,
+  ApiError,
+  NestValidorErrorMessage,
 } from './types'
 const BASE_URL = import.meta.env.VITE_API_URL?.toString() ?? ''
-
-interface ApiError {
-  status: number
-  statusText: string
-  messages: string[] | Record<string, string[]>
-}
-
-interface ApiResult<T> {
-  error: ApiError | null
-  data: T | null
-}
-
-interface NestValidorErrorMessage {
-  constraints: Record<string, string>
-  property: string
-}
 
 const groupApiErrorMessages = (
   messages: NestValidorErrorMessage[],
@@ -53,9 +40,8 @@ const handleApiError = (error: Error | AxiosError): ApiError => {
     statusText: 'Unexpected Error',
     messages: ['There was an error sending the request'],
   }
-
-  if (axios.isAxiosError(error)) {
-    const { data } = error?.response ?? {}
+  if (axios.isAxiosError(error) && error?.response) {
+    const { data = {} } = error.response
     apiError.status = data.statusCode
     apiError.statusText = data.error
     apiError.messages = groupApiErrorMessages(data.message)
