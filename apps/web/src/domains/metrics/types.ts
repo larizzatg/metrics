@@ -22,4 +22,10 @@ export interface MetricTimelineFilters {
   endDate?: string
 }
 
+export enum MetricTimelineInterval {
+  DAY = 'day',
+  HOUR = 'hour',
+  MINUTE = 'minute',
+}
+
 export type FormErrors<T> = Record<keyof T, string[]>
