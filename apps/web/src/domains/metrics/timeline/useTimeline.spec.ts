@@ -1,6 +1,7 @@
 import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest'
-import { useTimeline } from './useTimeline'
+
 import * as api from '../api'
+import { useTimeline } from './useTimeline'
 import { MetricTimelineInterval, type MetricTimelineFilters } from '../types'
 
 describe('useTimeline', () => {
@@ -22,16 +23,16 @@ describe('useTimeline', () => {
     const { filters } = useTimeline()
     expect(filters.value).toEqual(defaultFilters)
   })
-  it('timeline data is requested on hook use with default filters', () => {
+
+  it('timeline data is not  requested if filter.name is empty', () => {
     const spy = vi.spyOn(api, 'getMetricAverages')
     useTimeline()
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(defaultFilters)
+    expect(spy).not.toHaveBeenCalled()
   })
+
   it('timeline data is requested on filter change', () => {
     const spy = vi.spyOn(api, 'getMetricAverages')
     const { filters } = useTimeline()
-    expect(spy).toHaveBeenCalledTimes(1)
     filters.value.name = 'performance'
     expect(spy).toHaveBeenCalledWith({
       name: 'performance',
