@@ -15,12 +15,13 @@ export class MetricsRepository extends Repository<Metric> {
   async getMetricsAvgByTimestamp(
     avgFilterMetricDto: AvgFilterMetricDto,
   ): Promise<Metric[]> {
-    const { interval, startDate, endDate } = avgFilterMetricDto
+    const { name, interval, startDate, endDate } = avgFilterMetricDto
     const query = this.createQueryBuilder()
       .select('metric.name', 'name')
       .addSelect('ROUND(AVG(metric.value))', 'value')
       .addSelect(`DATE_TRUNC('${interval}', metric.timestamp)`, 'datetime')
       .from(Metric, 'metric')
+      .where('LOWER(metric.name) = LOWER(:name)', { name })
       .groupBy('metric.name')
       .addGroupBy('datetime')
       .orderBy('metric.name')
