@@ -16,11 +16,10 @@ export class MetricsRepository extends Repository<Metric> {
     avgFilterMetricDto: AvgFilterMetricDto,
   ): Promise<Metric[]> {
     const { name, interval, startDate, endDate } = avgFilterMetricDto
-    const query = this.createQueryBuilder()
+    const query = this.createQueryBuilder('metric')
       .select('metric.name', 'name')
       .addSelect('ROUND(AVG(metric.value))', 'value')
       .addSelect(`DATE_TRUNC('${interval}', metric.timestamp)`, 'datetime')
-      .from(Metric, 'metric')
       .where('LOWER(metric.name) = LOWER(:name)', { name })
       .groupBy('metric.name')
       .addGroupBy('datetime')
