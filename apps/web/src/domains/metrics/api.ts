@@ -1,6 +1,11 @@
 import axios from 'axios'
 import type { AxiosError } from 'axios'
-import type { Metric, MetricFormProps } from './types'
+import type {
+  AverageFilterMetric,
+  Metric,
+  MetricAverage,
+  MetricFormProps,
+} from './types'
 const BASE_URL = import.meta.env.VITE_API_URL?.toString() ?? ''
 
 interface ApiError {
@@ -67,6 +72,23 @@ export const createMetric = async (
   try {
     const response = await axios.post(`${BASE_URL}/metrics`, form)
     data = response.data as Metric
+  } catch (err) {
+    error = handleApiError(err as Error | AxiosError)
+  }
+
+  return { error, data }
+}
+
+export const getMetricAverages = async (
+  filters: AverageFilterMetric,
+): Promise<ApiResult<MetricAverage[]>> => {
+  let error: ApiError | null = null
+  let data: MetricAverage[] | null = null
+  try {
+    const response = await axios.get(`${BASE_URL}/metrics/avg`, {
+      params: filters,
+    })
+    data = response.data as MetricAverage[]
   } catch (err) {
     error = handleApiError(err as Error | AxiosError)
   }
