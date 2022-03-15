@@ -81,3 +81,16 @@ export const getMetricAverages = async (
 
   return { error, data }
 }
+
+export const getMetrics = async (): Promise<ApiResult<Partial<Metric>[]>> => {
+  let error: ApiError | null = null
+  let data: Partial<Metric>[] | null = []
+  try {
+    const response = await axios.get(`${BASE_URL}/metrics`)
+    data = response.data as Partial<Metric>[]
+  } catch (err) {
+    error = handleApiError(err as Error | AxiosError)
+  }
+
+  return { error, data }
+}
