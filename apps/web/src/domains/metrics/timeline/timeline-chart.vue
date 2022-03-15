@@ -6,16 +6,19 @@ import { MetricTimelineInterval, type MetricAverage } from '../types'
 import AppCard from '@/components/app-card/app-card.vue'
 import TimelineEmpty from './timeline-empty.vue'
 import TimelineLoading from './timeline-loading.vue'
+import TimelineError from './timeline-error.vue'
 
 interface TimelineChartProps {
   metrics: MetricAverage[]
   interval?: MetricTimelineInterval
   loading?: boolean
+  error?: string
 }
 
 const props = withDefaults(defineProps<TimelineChartProps>(), {
   loading: false,
   interval: MetricTimelineInterval.DAY,
+  error: '',
 })
 
 Chart.register(...registerables)
@@ -49,7 +52,7 @@ const timelineTitle = computed(() => {
   return `${titles[props.interval]} metrics`
 })
 
-const lineChartProps = {
+const lineChartProps = computed(() => ({
   chartData: {
     datasets: [{ data: parsedDataset.value, borderColor: '#818CF8' }],
   },
@@ -62,12 +65,13 @@ const lineChartProps = {
       legend: { display: false },
     },
   },
-}
+}))
 </script>
 
 <template>
   <app-card :title="timelineTitle">
     <timeline-loading v-if="loading" class="text-gray-400" />
+    <timeline-error v-else-if="error">{{ error }}</timeline-error>
     <timeline-empty v-else-if="!metrics.length" class="text-gray-400" />
     <line-chart v-else v-bind="lineChartProps" />
   </app-card>

@@ -22,6 +22,13 @@ Loading.args = {
   metrics: [],
 }
 
+export const Error = Template.bind({})
+Error.args = {
+  loading: false,
+  metrics: [],
+  error: 'name should not be empty',
+}
+
 export const Empty = Template.bind({})
 Empty.args = {
   loading: false,
