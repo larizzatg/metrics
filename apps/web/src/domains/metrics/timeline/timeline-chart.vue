@@ -4,7 +4,8 @@ import { LineChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
 import { MetricTimelineInterval, type MetricAverage } from '../types'
 import AppCard from '@/components/app-card/app-card.vue'
-import AppLoader from '@/components/app-loader/app-loader.vue'
+import TimelineEmpty from './timeline-empty.vue'
+import TimelineLoading from './timeline-loading.vue'
 
 interface TimelineChartProps {
   metrics: MetricAverage[]
@@ -66,13 +67,8 @@ const lineChartProps = {
 
 <template>
   <app-card :title="timelineTitle">
-    <div
-      v-if="loading"
-      class="flex flex-col items-center justify-center text-blue-400 h-96"
-    >
-      <app-loader class="-mt-8" />
-      <small class="mt-2 text-blue-300">loading the metrics</small>
-    </div>
-    <LineChart v-else v-bind="lineChartProps" />
+    <timeline-loading v-if="loading" class="text-gray-400" />
+    <timeline-empty v-else-if="!metrics.length" class="text-gray-400" />
+    <line-chart v-else v-bind="lineChartProps" />
   </app-card>
 </template>

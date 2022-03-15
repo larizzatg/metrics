@@ -22,6 +22,12 @@ Loading.args = {
   metrics: [],
 }
 
+export const Empty = Template.bind({})
+Empty.args = {
+  loading: false,
+  metrics: [],
+}
+
 export const Daily = Template.bind({})
 Daily.args = {
   metrics: dailyAverage,
