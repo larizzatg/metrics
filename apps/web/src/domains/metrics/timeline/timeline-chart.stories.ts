@@ -16,6 +16,12 @@ const Template: Story<typeof TimelineChart> = (args) => ({
   `,
 })
 
+export const Loading = Template.bind({})
+Loading.args = {
+  loading: true,
+  metrics: [],
+}
+
 export const Daily = Template.bind({})
 Daily.args = {
   metrics: dailyAverage,
