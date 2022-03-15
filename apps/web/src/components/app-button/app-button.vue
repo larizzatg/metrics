@@ -32,7 +32,7 @@ const buttonStyles = computed(() => {
 
 <template>
   <button
-    class="flex font-medium rounded focus:outline-none focus:ring-2"
+    class="flex justify-center font-medium rounded focus:outline-none focus:ring-2"
     :class="buttonStyles"
   >
     <slot />
