@@ -21,6 +21,8 @@ export class MetricsController {
     return this.metricsService.getMetricsAvgByTimestamp(avgFilterMetricDto)
   }
 
+  // @todo: refactor, instead of making api call
+  // move shared types to own package
   @Get('/intervals')
   getIntervals(): MetricInterval[] {
     return Object.values(MetricInterval)
