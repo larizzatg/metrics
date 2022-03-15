@@ -1,6 +1,7 @@
 import TimelineChart from './timeline-chart.vue'
 import type { Story } from '@storybook/vue3'
 import { dailyAverage } from '@/mocks/data'
+import { MetricTimelineInterval } from '../types'
 
 export default {
   title: 'Metric/ChartTimeline',
@@ -18,4 +19,5 @@ const Template: Story<typeof TimelineChart> = (args) => ({
 export const Daily = Template.bind({})
 Daily.args = {
   metrics: dailyAverage,
+  interval: MetricTimelineInterval.DAY,
 }
