@@ -5,8 +5,11 @@ import { Metric } from './entities/metric.entity'
 
 @EntityRepository(Metric)
 export class MetricsRepository extends Repository<Metric> {
-  getAllMetrics(): Promise<Metric[]> {
-    return this.find()
+  getMetricsName(): Promise<string[]> {
+    const query = this.createQueryBuilder('metric')
+      .select('DISTINCT ON (LOWER(metric.name)) name')
+      .orderBy('(LOWER(metric.name))', 'ASC')
+    return query.getRawMany()
   }
 
   async getMetricsAvgByTimestamp(

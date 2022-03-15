@@ -10,8 +10,8 @@ export class MetricsController {
   constructor(private readonly metricsService: MetricsService) {}
 
   @Get()
-  getAll(): Promise<Metric[]> {
-    return this.metricsService.getAllMetrics()
+  getMetricsName(): Promise<string[]> {
+    return this.metricsService.getMetricsName()
   }
 
   @Get('/avg')
