@@ -1,7 +1,7 @@
 import axios from 'axios'
 import type { AxiosError } from 'axios'
 import type {
-  AverageFilterMetric,
+  MetricTimelineFilters,
   Metric,
   MetricAverage,
   MetricFormProps,
@@ -80,7 +80,7 @@ export const createMetric = async (
 }
 
 export const getMetricAverages = async (
-  filters: AverageFilterMetric,
+  filters: MetricTimelineFilters,
 ): Promise<ApiResult<MetricAverage[]>> => {
   let error: ApiError | null = null
   let data: MetricAverage[] | null = null

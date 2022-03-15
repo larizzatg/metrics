@@ -6,7 +6,7 @@ import AppModal from '@/components/app-modal/app-modal.vue'
 import MetricForm from '../components/metric-form.vue'
 import MetricChartTimeline from '../components/metric-chart-timeline.vue'
 import { getMetricAverages } from '../api'
-import type { MetricAverage, AverageFilterMetric } from '../types'
+import type { MetricAverage, MetricTimelineFilters } from '../types'
 import { useToast } from 'vue-toastification'
 
 const toast = useToast()
@@ -14,7 +14,7 @@ const showMetricFormModal = ref(false)
 
 const loading = ref(false)
 const timeline = ref<MetricAverage[]>([])
-const timelineFilters = reactive<AverageFilterMetric>({
+const timelineFilters = reactive<MetricTimelineFilters>({
   name: 'performance',
   interval: 'day',
   startDate: '',
@@ -27,7 +27,7 @@ const filtersToApply = computed(() => {
       return !!value
     }),
   )
-  return filters as unknown as AverageFilterMetric
+  return filters as unknown as MetricTimelineFilters
 })
 
 watchEffect(async () => {

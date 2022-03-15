@@ -15,7 +15,7 @@ export interface MetricFormProps {
   value: number
 }
 
-export interface AverageFilterMetric {
+export interface MetricTimelineFilters {
   name: string
   interval?: string
   startDate?: string
