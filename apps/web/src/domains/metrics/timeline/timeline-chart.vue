@@ -1,8 +1,9 @@
 <script lang="ts" setup>
+import { computed } from 'vue'
 import { LineChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
 import { MetricTimelineInterval, type MetricAverage } from '../types'
-import { computed } from 'vue'
+import AppCard from '@/components/app-card/app-card.vue'
 
 const props =
   defineProps<{ metrics: MetricAverage[]; interval: MetricTimelineInterval }>()
@@ -29,6 +30,15 @@ const parsedDataset = computed(() => {
   })
 })
 
+const timelineTitle = computed(() => {
+  const titles: Record<MetricTimelineInterval, string> = {
+    [MetricTimelineInterval.DAY]: 'Daily',
+    [MetricTimelineInterval.HOUR]: 'Hourly',
+    [MetricTimelineInterval.MINUTE]: 'Minute',
+  }
+  return `${titles[props.interval]} metrics`
+})
+
 const lineChartProps = {
   chartData: {
     datasets: [{ data: parsedDataset.value, borderColor: '#818CF8' }],
@@ -46,7 +56,7 @@ const lineChartProps = {
 </script>
 
 <template>
-  <div>
+  <app-card :title="timelineTitle">
     <LineChart v-bind="lineChartProps" />
-  </div>
+  </app-card>
 </template>
