@@ -41,21 +41,21 @@ watch(
           :square-padding="true"
         >
           <template #header>
-            <div class="flex flex-1">
+            <div class="flex flex-col flex-1">
               <tw-dialog-title class="flex-1 caption" v-if="title">
                 {{ title }}
               </tw-dialog-title>
-              <app-icon-close
-                class="text-gray-500 cursor-pointer"
-                @click="$emit('update:open', false)"
-              />
+              <tw-dialog-description
+                class="w-full text-sm font-light text-gray-400"
+                v-if="description"
+              >
+                {{ description }}
+              </tw-dialog-description>
             </div>
-            <tw-dialog-description
-              class="w-full text-sm font-light text-gray-400"
-              v-if="description"
-            >
-              {{ description }}
-            </tw-dialog-description>
+            <app-icon-close
+              class="text-gray-500 cursor-pointer"
+              @click="$emit('update:open', false)"
+            />
           </template>
 
           <slot />
