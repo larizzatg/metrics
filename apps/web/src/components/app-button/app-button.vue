@@ -22,8 +22,8 @@ const buttonStyles = computed(() => {
   }
 
   const types: Record<ButtonType, string> = {
-    primary: 'text-white bg-blue-500 hover:bg-blue-600',
-    secondary: 'text-white bg-gray-500 hover:bg-gray-600',
+    primary: 'text-white bg-indigo-400 hover:bg-indigo-500',
+    secondary: 'text-white bg-gray-400 hover:bg-gray-500',
   }
 
   return [sizes[props.size], types[props.type]]
