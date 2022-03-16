@@ -6,6 +6,7 @@ import MetricForm from '../components/metric-form.vue'
 import TimelineChart from '../timeline/timeline-chart.vue'
 import { useTimeline } from '../timeline/useTimeline'
 import type { MetricTimelineFilters } from '../types'
+import MetricSelect from '../components/metric-select.vue'
 
 const showMetricFormModal = ref(false)
 const { filters, loading, data, firstError } = useTimeline()
@@ -31,6 +32,10 @@ const updateFilters = (f: MetricTimelineFilters): void => {
       :error="firstError"
       :interval="filters.interval"
       @change="updateFilters"
-    />
+    >
+      <template #menu>
+        <metric-select @change="updateFilters" />
+      </template>
+    </timeline-chart>
   </main>
 </template>
