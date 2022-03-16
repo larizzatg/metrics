@@ -16,6 +16,6 @@ export class Metric {
   @Column({ type: 'decimal' })
   value: number
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz', nullable: true })
   timestamp: Date
 }

@@ -5,19 +5,28 @@ import { Metric } from './entities/metric.entity'
 
 @EntityRepository(Metric)
 export class MetricsRepository extends Repository<Metric> {
-  getAllMetrics(): Promise<Metric[]> {
-    return this.find()
+  getMetricsName(): Promise<string[]> {
+    const query = this.createQueryBuilder('metric')
+      .select('DISTINCT ON (LOWER(metric.name)) name')
+      .orderBy('(LOWER(metric.name))', 'ASC')
+    return query.getRawMany()
   }
 
   async getMetricsAvgByTimestamp(
     avgFilterMetricDto: AvgFilterMetricDto,
   ): Promise<Metric[]> {
-    const { interval, startDate, endDate } = avgFilterMetricDto
-    const query = this.createQueryBuilder()
+    const { name, interval, startDate, endDate, timeZone } = avgFilterMetricDto
+
+    const convertTimeZone = timeZone ? `at time zone '${timeZone}'` : ''
+
+    const query = this.createQueryBuilder('metric')
       .select('metric.name', 'name')
       .addSelect('ROUND(AVG(metric.value))', 'value')
-      .addSelect(`DATE_TRUNC('${interval}', metric.timestamp)`, 'datetime')
-      .from(Metric, 'metric')
+      .addSelect(
+        `DATE_TRUNC('${interval}', (metric.timestamp ${convertTimeZone}))`,
+        'datetime',
+      )
+      .where('LOWER(metric.name) = LOWER(:name)', { name })
       .groupBy('metric.name')
       .addGroupBy('datetime')
       .orderBy('metric.name')
@@ -28,7 +37,7 @@ export class MetricsRepository extends Repository<Metric> {
     }
 
     if (endDate) {
-      query.andWhere('metric.timestamp <= :endDate', { endDate })
+      query.andWhere('metric.timestamp < :endDate', { endDate })
     }
 
     const averageMetrics = await query.getRawMany()

@@ -1,23 +1,15 @@
 import axios from 'axios'
 import type { AxiosError } from 'axios'
-import type { Metric, MetricFormProps } from './types'
+import type {
+  MetricTimelineFilters,
+  Metric,
+  MetricAverage,
+  MetricFormProps,
+  ApiResult,
+  ApiError,
+  NestValidorErrorMessage,
+} from './types'
 const BASE_URL = import.meta.env.VITE_API_URL?.toString() ?? ''
-
-interface ApiError {
-  status: number
-  statusText: string
-  messages: string[] | Record<string, string[]>
-}
-
-interface ApiResult<T> {
-  error: ApiError | null
-  data: T | null
-}
-
-interface NestValidorErrorMessage {
-  constraints: Record<string, string>
-  property: string
-}
 
 const groupApiErrorMessages = (
   messages: NestValidorErrorMessage[],
@@ -48,9 +40,8 @@ const handleApiError = (error: Error | AxiosError): ApiError => {
     statusText: 'Unexpected Error',
     messages: ['There was an error sending the request'],
   }
-
-  if (axios.isAxiosError(error)) {
-    const { data } = error?.response ?? {}
+  if (axios.isAxiosError(error) && error?.response) {
+    const { data = {} } = error.response
     apiError.status = data.statusCode
     apiError.statusText = data.error
     apiError.messages = groupApiErrorMessages(data.message)
@@ -67,6 +58,39 @@ export const createMetric = async (
   try {
     const response = await axios.post(`${BASE_URL}/metrics`, form)
     data = response.data as Metric
+  } catch (err) {
+    error = handleApiError(err as Error | AxiosError)
+  }
+
+  return { error, data }
+}
+
+export const getMetricAverages = async (
+  filters: MetricTimelineFilters,
+): Promise<ApiResult<MetricAverage[]>> => {
+  let error: ApiError | null = null
+  let data: MetricAverage[] | null = null
+  try {
+    const response = await axios.get(`${BASE_URL}/metrics/avg`, {
+      params: {
+        ...filters,
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      },
+    })
+    data = response.data as MetricAverage[]
+  } catch (err) {
+    error = handleApiError(err as Error | AxiosError)
+  }
+
+  return { error, data }
+}
+
+export const getMetrics = async (): Promise<ApiResult<Partial<Metric>[]>> => {
+  let error: ApiError | null = null
+  let data: Partial<Metric>[] | null = []
+  try {
+    const response = await axios.get(`${BASE_URL}/metrics`)
+    data = response.data as Partial<Metric>[]
   } catch (err) {
     error = handleApiError(err as Error | AxiosError)
   }

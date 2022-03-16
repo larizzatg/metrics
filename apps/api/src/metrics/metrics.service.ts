@@ -11,8 +11,8 @@ export class MetricsService {
     private metricsRepository: MetricsRepository,
   ) {}
 
-  getAllMetrics(): Promise<Metric[]> {
-    return this.metricsRepository.getAllMetrics()
+  getMetricsName(): Promise<string[]> {
+    return this.metricsRepository.getMetricsName()
   }
 
   getMetricsAvgByTimestamp(

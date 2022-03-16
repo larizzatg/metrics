@@ -8,7 +8,7 @@ export default {
 
 export const Default = () => ({
   components: { AppCard },
-  template: `<div width="500px" class="bg-blue-50 p-2"><app-card title="Card title" /></div>`,
+  template: `<div width="500px" class="bg-blue-50 p-2"><app-card title="Card title"  subtitle="Card subtitle"/></div>`,
 })
 
 export const WithContent = () => ({
