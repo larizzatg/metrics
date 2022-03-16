@@ -17,8 +17,6 @@ import AppButton from '@/components/app-button/app-button.vue'
     <p class="font-thin text-md">
       No data available, let's create some new metrics
     </p>
-    <RouterLink to="/">
-      <app-button type="secondary" size="small"> Create new metric </app-button>
-    </RouterLink>
+    <app-button type="secondary" size="small"> Create new metric </app-button>
   </div>
 </template>

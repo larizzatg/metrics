@@ -2,7 +2,15 @@
 import { computed } from 'vue'
 import 'chartjs-adapter-date-fns'
 import { LineChart } from 'vue-chart-3'
-import { Chart, registerables } from 'chart.js'
+import {
+  Chart,
+  LineController,
+  LinearScale,
+  TimeSeriesScale,
+  Tooltip,
+  PointElement,
+  LineElement,
+} from 'chart.js'
 import { MetricTimelineInterval, type MetricAverage } from '../types'
 import AppCard from '@/components/app-card/app-card.vue'
 import TimelineEmpty from './timeline-empty.vue'
@@ -25,7 +33,14 @@ const props = withDefaults(defineProps<TimelineChartProps>(), {
   error: '',
 })
 
-Chart.register(...registerables)
+Chart.register(
+  LineController,
+  PointElement,
+  LinearScale,
+  TimeSeriesScale,
+  Tooltip,
+  LineElement,
+)
 
 const timelineTitle = computed(() => {
   const titles: Record<MetricTimelineInterval, string> = {
