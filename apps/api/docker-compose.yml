@@ -9,3 +9,11 @@ services:
       - '${DB_PORT}:5432'
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
+  db-test:
+    container_name: metrics-db-test
+    image: postgres
+    restart: always
+    ports:
+      - '${TEST_DB_PORT}:5432'
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
