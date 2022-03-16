@@ -26,7 +26,7 @@ const updateFilters = (f: MetricTimelineFilters): void => {
       </app-button>
     </div>
     <timeline-chart
-      :metrics="data"
+      :metrics-average="data"
       :loading="loading"
       :error="firstError"
       :interval="filters.interval"

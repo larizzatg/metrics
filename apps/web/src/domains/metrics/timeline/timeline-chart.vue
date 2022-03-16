@@ -11,7 +11,7 @@ import TimelineError from './timeline-error.vue'
 import { getHourRangeUTC, getMinuteRangeUTC, getNextInterval } from './timeline'
 
 interface TimelineChartProps {
-  metrics: MetricAverage[]
+  metricsAverage: MetricAverage[]
   interval?: MetricTimelineInterval
   loading?: boolean
   error?: string
@@ -72,7 +72,7 @@ const xScaleUnit = computed(() => {
 
 const lineChartProps = computed(() => ({
   chartData: {
-    datasets: [{ data: props.metrics, borderColor: '#818CF8' }],
+    datasets: [{ data: props.metricsAverage, borderColor: '#818CF8' }],
   },
   options: {
     parsing: {
@@ -105,7 +105,7 @@ const lineChartProps = computed(() => ({
   >
     <timeline-loading v-if="loading" class="text-gray-400" />
     <timeline-error v-else-if="error">{{ error }}</timeline-error>
-    <timeline-empty v-else-if="!metrics.length" class="text-gray-400" />
+    <timeline-empty v-else-if="!metricsAverage.length" class="text-gray-400" />
     <line-chart v-else v-bind="lineChartProps" />
   </app-card>
 </template>
