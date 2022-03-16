@@ -103,6 +103,9 @@ const lineChartProps = computed(() => ({
     :title="timelineTitle"
     subtitle="Click on a data point to see more information"
   >
+    <template #menu>
+      <slot name="menu" />
+    </template>
     <timeline-loading v-if="loading" class="text-gray-400" />
     <timeline-error v-else-if="error">{{ error }}</timeline-error>
     <timeline-empty v-else-if="!metricsAverage.length" class="text-gray-400" />
