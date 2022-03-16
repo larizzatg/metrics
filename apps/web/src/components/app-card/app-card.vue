@@ -9,15 +9,15 @@ defineProps<{
 <template>
   <div class="bg-white" :class="squarePadding ? 'px-4 py-4' : 'px-4 py-8'">
     <header class="flex flex-wrap items-center justify-center mb-4">
-      <div class="flex flex-1">
-        <slot name="header">
-          <h5 class="flex-1 caption" v-if="title">{{ title }}</h5>
-          <slot name="menu" />
-        </slot>
-      </div>
-      <small class="w-full text-sm font-light text-gray-400" v-if="subtitle">
-        {{ subtitle }}
-      </small>
+      <slot name="header">
+        <div class="flex-1">
+          <h5 class="caption" v-if="title">{{ title }}</h5>
+          <small class="text-sm font-light text-gray-400" v-if="subtitle">
+            {{ subtitle }}
+          </small>
+        </div>
+        <slot name="menu" />
+      </slot>
     </header>
     <div>
       <slot></slot>
