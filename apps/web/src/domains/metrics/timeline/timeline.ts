@@ -19,3 +19,10 @@ export function getHourRangeUTC(dateString: string): string {
   const nextDay = set(dateUTC, { hours: 24 })
   return nextDay.toISOString()
 }
+
+export function getMinuteRangeUTC(dateString: string): string {
+  const localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+  const dateUTC = zonedTimeToUtc(dateString, localTimeZone)
+  const nextDay = set(dateUTC, { minutes: 60 })
+  return nextDay.toISOString()
+}
