@@ -11,7 +11,7 @@ export class MetricsService {
     private metricsRepository: MetricsRepository,
   ) {}
 
-  getMetricsName(): Promise<string[]> {
+  getMetricsName(): Promise<Partial<Metric>[]> {
     return this.metricsRepository.getMetricsName()
   }
 

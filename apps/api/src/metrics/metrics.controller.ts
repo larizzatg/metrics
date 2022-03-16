@@ -10,7 +10,7 @@ export class MetricsController {
   constructor(private readonly metricsService: MetricsService) {}
 
   @Get()
-  getMetricsName(): Promise<string[]> {
+  getMetricsName(): Promise<Partial<Metric>[]> {
     return this.metricsService.getMetricsName()
   }
 

@@ -5,7 +5,7 @@ import { Metric } from './entities/metric.entity'
 
 @EntityRepository(Metric)
 export class MetricsRepository extends Repository<Metric> {
-  getMetricsName(): Promise<string[]> {
+  getMetricsName(): Promise<Partial<Metric>[]> {
     const query = this.createQueryBuilder('metric')
       .select('DISTINCT ON (LOWER(metric.name)) name')
       .orderBy('(LOWER(metric.name))', 'ASC')
