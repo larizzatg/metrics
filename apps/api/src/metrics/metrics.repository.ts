@@ -15,11 +15,17 @@ export class MetricsRepository extends Repository<Metric> {
   async getMetricsAvgByTimestamp(
     avgFilterMetricDto: AvgFilterMetricDto,
   ): Promise<Metric[]> {
-    const { name, interval, startDate, endDate } = avgFilterMetricDto
+    const { name, interval, startDate, endDate, timeZone } = avgFilterMetricDto
+
+    const convertTimeZone = timeZone ? `at time zone '${timeZone}'` : ''
+
     const query = this.createQueryBuilder('metric')
       .select('metric.name', 'name')
       .addSelect('ROUND(AVG(metric.value))', 'value')
-      .addSelect(`DATE_TRUNC('${interval}', metric.timestamp)`, 'datetime')
+      .addSelect(
+        `DATE_TRUNC('${interval}', (metric.timestamp ${convertTimeZone}))`,
+        'datetime',
+      )
       .where('LOWER(metric.name) = LOWER(:name)', { name })
       .groupBy('metric.name')
       .addGroupBy('datetime')
@@ -31,7 +37,7 @@ export class MetricsRepository extends Repository<Metric> {
     }
 
     if (endDate) {
-      query.andWhere('metric.timestamp <= :endDate', { endDate })
+      query.andWhere('metric.timestamp < :endDate', { endDate })
     }
 
     const averageMetrics = await query.getRawMany()

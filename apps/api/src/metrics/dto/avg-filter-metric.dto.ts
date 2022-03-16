@@ -23,4 +23,8 @@ export class AvgFilterMetricDto {
   @IsOptional()
   @IsDateString()
   readonly endDate?: string
+
+  @IsOptional()
+  @IsString()
+  readonly timeZone?: string
 }

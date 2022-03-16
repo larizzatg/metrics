@@ -72,7 +72,10 @@ export const getMetricAverages = async (
   let data: MetricAverage[] | null = null
   try {
     const response = await axios.get(`${BASE_URL}/metrics/avg`, {
-      params: filters,
+      params: {
+        ...filters,
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      },
     })
     data = response.data as MetricAverage[]
   } catch (err) {
