@@ -2,7 +2,6 @@ import { Body, Controller, Get, Post, Query } from '@nestjs/common'
 import { AvgFilterMetricDto } from './dto/avg-filter-metric.dto'
 import { CreateMetricDto } from './dto/create-metric.dto'
 import { Metric } from './entities/metric.entity'
-import { MetricInterval } from './metrics-intervals.enum'
 import { MetricsService } from './metrics.service'
 
 @Controller('metrics')
