@@ -1,29 +1,16 @@
-import { computed, readonly, ref, watchEffect } from 'vue'
-import { getMetrics, getMetricAverages } from '../api'
+import { computed, ref, watchEffect } from 'vue'
+import { getMetricAverages } from '../api'
 import {
   MetricTimelineInterval,
   type MetricAverage,
   type MetricTimelineFilters,
   type ApiError,
-  type Metric,
 } from '../types'
 
 export function useTimeline() {
   const loading = ref(false)
   const error = ref<ApiError | null>(null)
   const data = ref<MetricAverage[]>([])
-
-  const metrics = ref<Partial<Metric>[]>([])
-  getMetrics().then((response) => {
-    if (response.error) {
-      error.value = response.error
-    } else {
-      metrics.value = response.data ?? []
-      if (metrics.value?.[0]) {
-        filters.value.name = metrics.value[0].name ?? ''
-      }
-    }
-  })
 
   const filters = ref<MetricTimelineFilters>({
     name: '',
@@ -65,6 +52,5 @@ export function useTimeline() {
     loading,
     data,
     firstError,
-    metrics: readonly(metrics.value),
   }
 }
