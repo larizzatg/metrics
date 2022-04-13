@@ -1,6 +1,6 @@
 # Metrics
 
-Fullstack application to visualize and create metrics.
+Fullstack application to visualize and create metrics
 
 ## Features
 
